@@ -14,3 +14,16 @@ func TestField_Width(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_Height(test *testing.T) {
+	field := Field{
+		{false, false, false},
+		{false, false, false},
+	}
+	actualHeight := field.Height()
+
+	expectedHeight := 2
+	if actualHeight != expectedHeight {
+		test.Fail()
+	}
+}
