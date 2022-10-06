@@ -9,3 +9,7 @@ func (field Field) Width() int {
 func (field Field) Height() int {
 	return len(field)
 }
+
+func (field Field) Cell(column int, row int) bool {
+	return field[row][column]
+}

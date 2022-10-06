@@ -27,3 +27,16 @@ func TestField_Height(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_Cell(test *testing.T) {
+	field := Field{
+		{false, false, false},
+		{false, false, true},
+	}
+	actualCell := field.Cell(2, 1)
+
+	expectedCell := true
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
