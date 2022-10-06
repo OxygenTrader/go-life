@@ -5,6 +5,18 @@ import (
 	"testing"
 )
 
+func TestNewField(test *testing.T) {
+	field := NewField(3, 2)
+
+	expectedField := Field{
+		{false, false, false},
+		{false, false, false},
+	}
+	if !reflect.DeepEqual(field, expectedField) {
+		test.Fail()
+	}
+}
+
 func TestField_Width(test *testing.T) {
 	field := Field{
 		{false, false, false},

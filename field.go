@@ -2,6 +2,20 @@ package life
 
 type Field [][]bool
 
+func NewField(width int, height int) Field {
+	field := Field{}
+	for j := 0; j < height; j++ {
+		row := []bool{}
+		for i := 0; i < width; i++ {
+			row = append(row, false)
+		}
+
+		field = append(field, row)
+	}
+
+	return field
+}
+
 func (field Field) Width() int {
 	return len(field[0])
 }
