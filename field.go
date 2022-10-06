@@ -11,5 +11,7 @@ func (field Field) Height() int {
 }
 
 func (field Field) Cell(column int, row int) bool {
+	column = (column + field.Width()) % field.Width()
+	row = (row + field.Height()) % field.Height()
 	return field[row][column]
 }

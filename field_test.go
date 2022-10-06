@@ -40,3 +40,29 @@ func TestField_Cell(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_Cell_withCoordinatesBeyondMinimum(test *testing.T) {
+	field := Field{
+		{false, false, false},
+		{false, true, false},
+	}
+	actualCell := field.Cell(-2, -1)
+
+	expectedCell := true
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
+
+func TestField_Cell_withCoordinatesBeyondMaximum(test *testing.T) {
+	field := Field{
+		{false, false, false},
+		{false, true, false},
+	}
+	actualCell := field.Cell(4, 3)
+
+	expectedCell := true
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
