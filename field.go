@@ -15,3 +15,7 @@ func (field Field) Cell(column int, row int) bool {
 	row = (row + field.Height()) % field.Height()
 	return field[row][column]
 }
+
+func (field Field) SetCell(column int, row int, cell bool) {
+	field[row][column] = cell
+}

@@ -1,6 +1,9 @@
 package life
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestField_Width(test *testing.T) {
 	field := Field{
@@ -63,6 +66,22 @@ func TestField_Cell_withCoordinatesBeyondMaximum(test *testing.T) {
 
 	expectedCell := true
 	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
+
+func TestField_SetCell(test *testing.T) {
+	field := Field{
+		{false, false, false},
+		{false, false, false},
+	}
+	field.SetCell(2, 1, true)
+
+	expectedField := Field{
+		{false, false, false},
+		{false, false, true},
+	}
+	if !reflect.DeepEqual(field, expectedField) {
 		test.Fail()
 	}
 }
