@@ -97,3 +97,31 @@ func TestField_SetCell(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_NeighbourCount(test *testing.T) {
+	field := Field{
+		{true, false, false},
+		{false, true, true},
+		{true, false, false},
+	}
+	actualCount := field.NeighborCount(0, 1)
+
+	expectedCount := 4
+	if actualCount != expectedCount {
+		test.Fail()
+	}
+}
+
+func TestField_NeighbourCount_forAliveCell(test *testing.T) {
+	field := Field{
+		{true, false, false},
+		{true, true, true},
+		{true, false, false},
+	}
+	actualCount := field.NeighborCount(0, 1)
+
+	expectedCount := 4
+	if actualCount != expectedCount {
+		test.Fail()
+	}
+}

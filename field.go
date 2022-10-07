@@ -33,3 +33,20 @@ func (field Field) Cell(column int, row int) bool {
 func (field Field) SetCell(column int, row int, cell bool) {
 	field[row][column] = cell
 }
+
+func (field Field) NeighborCount(column int, row int) int {
+	var count int
+	for j := row - 1; j <= row+1; j++ {
+		for i := column - 1; i <= column+1; i++ {
+			if field.Cell(i, j) {
+				count++
+			}
+		}
+	}
+
+	if field.Cell(column, row) {
+		count--
+	}
+
+	return count
+}
