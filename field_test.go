@@ -125,3 +125,51 @@ func TestField_NeighbourCount_forAliveCell(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_NextCell_withBirth(test *testing.T) {
+	field := Field{
+		{false, false, false, false, false},
+		{false, false, true, false, false},
+		{false, false, false, true, false},
+		{false, true, true, true, false},
+		{false, false, false, false, false},
+	}
+	actualCell := field.NextCell(1, 2)
+
+	expectedCell := true
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
+
+func TestField_NextCell_withSurvival(test *testing.T) {
+	field := Field{
+		{false, false, false, false, false},
+		{false, false, true, false, false},
+		{false, false, false, true, false},
+		{false, true, true, true, false},
+		{false, false, false, false, false},
+	}
+	actualCell := field.NextCell(2, 3)
+
+	expectedCell := true
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
+
+func TestField_NextCell_withDeath(test *testing.T) {
+	field := Field{
+		{false, false, false, false, false},
+		{false, false, true, false, false},
+		{false, false, false, true, false},
+		{false, true, true, true, false},
+		{false, false, false, false, false},
+	}
+	actualCell := field.NextCell(1, 3)
+
+	expectedCell := false
+	if actualCell != expectedCell {
+		test.Fail()
+	}
+}
