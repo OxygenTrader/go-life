@@ -60,3 +60,15 @@ func (field Field) NextCell(column int, row int) bool {
 
 	return willBeBorn || WillSurvive
 }
+
+func (field Field) NextField() Field {
+	nextField := NewField(field.Width(), field.Height())
+	for j := 0; j < field.Height(); j++ {
+		for i := 0; i < field.Width(); i++ {
+			nextCell := field.NextCell(i, j)
+			nextField.SetCell(i, j, nextCell)
+		}
+	}
+
+	return nextField
+}
