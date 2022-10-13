@@ -72,3 +72,20 @@ func (field Field) NextField() Field {
 
 	return nextField
 }
+
+func (field Field) String() string {
+	var result string
+	for j := 0; j < field.Height(); j++ {
+		for i := 0; i < field.Width(); i++ {
+			if field.Cell(i, j) {
+				result += "0"
+			} else {
+				result += "."
+			}
+		}
+
+		result += "\n"
+	}
+
+	return result
+}

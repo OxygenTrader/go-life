@@ -195,3 +195,24 @@ func TestField_NextField(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestField_String(test *testing.T) {
+	field := Field{
+		{false, false, false, false, false},
+		{false, false, true, false, false},
+		{false, false, false, true, false},
+		{false, true, true, true, false},
+		{false, false, false, false, false},
+	}
+	actualResult := field.String()
+
+	expectedResult := "" +
+		".....\n" +
+		"..0..\n" +
+		"...0.\n" +
+		".000.\n" +
+		".....\n"
+	if actualResult != expectedResult {
+		test.Fail()
+	}
+}
