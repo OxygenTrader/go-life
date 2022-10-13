@@ -1,5 +1,10 @@
 package life
 
+import (
+	"errors"
+	"fmt"
+)
+
 type Field [][]bool
 
 func NewField(width int, height int) Field {
@@ -14,6 +19,29 @@ func NewField(width int, height int) Field {
 	}
 
 	return field
+}
+
+func ParseField(text string) (Field, error) {
+	field := Field{}
+	row := []bool{}
+	for _, character := range text {
+		if character == '.' {
+			row = append(row, false)
+		} else if character == '0' {
+			row = append(row, true)
+		} else if character == '\n' {
+			if field.Height() != 0 && len(row) != field.Width() {
+				return nil, errors.New("inconsistent row length")
+			}
+
+			field = append(field, row)
+			row = []bool{}
+		} else {
+			return nil, fmt.Errorf("unknown character %q", character)
+		}
+	}
+
+	return field, nil
 }
 
 func (field Field) Width() int {
