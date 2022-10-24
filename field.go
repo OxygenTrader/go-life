@@ -24,7 +24,16 @@ func NewField(width int, height int) Field {
 func ParseField(text string) (Field, error) {
 	field := Field{}
 	row := []bool{}
+	var isInsideComment bool
 	for _, character := range text {
+		if isInsideComment {
+			if character == '\n' {
+				isInsideComment = false
+			}
+
+			continue
+		}
+
 		if character == '.' {
 			row = append(row, false)
 		} else if character == '0' {
@@ -36,6 +45,8 @@ func ParseField(text string) (Field, error) {
 
 			field = append(field, row)
 			row = []bool{}
+		} else if character == '!' {
+			isInsideComment = true
 		} else {
 			return nil, fmt.Errorf("unknown character %q", character)
 		}

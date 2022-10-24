@@ -17,6 +17,73 @@ func TestNewField(test *testing.T) {
 	}
 }
 
+func TestParseField(test *testing.T) {
+	text := "" +
+		"!Name: Glider\n" +
+		"!Author: Richard K. Guy\n" +
+		".....\n" +
+		"..0..\n" +
+		"...0.\n" +
+		".000.\n" +
+		".....\n"
+	actualField, actualErr := ParseField(text)
+
+	expectedField := Field{
+		{false, false, false, false, false},
+		{false, false, true, false, false},
+		{false, false, false, true, false},
+		{false, true, true, true, false},
+		{false, false, false, false, false},
+	}
+	if !reflect.DeepEqual(actualField, expectedField) {
+		test.Fail()
+	}
+
+	if actualErr != nil {
+		test.Fail()
+	}
+}
+
+func TestParseField_withInconsistentRowLength(test *testing.T) {
+	text := "" +
+		"!Name: Glider\n" +
+		"!Author: Richard K. Guy\n" +
+		".....\n" +
+		"..0..\n" +
+		"...0\n" +
+		".000.\n" +
+		".....\n"
+	actualField, actualErr := ParseField(text)
+
+	if actualField != nil {
+		test.Fail()
+	}
+
+	if actualErr == nil {
+		test.Fail()
+	}
+}
+
+func TestParseField_withUnknownCharacter(test *testing.T) {
+	text := "" +
+		"!Name: Glider\n" +
+		"!Author: Richard K. Guy\n" +
+		".....\n" +
+		"..0..\n" +
+		"...#.\n" +
+		".000.\n" +
+		".....\n"
+	actualField, actualErr := ParseField(text)
+
+	if actualField != nil {
+		test.Fail()
+	}
+
+	if actualErr == nil {
+		test.Fail()
+	}
+}
+
 func TestField_Width(test *testing.T) {
 	field := Field{
 		{false, false, false},
