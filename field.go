@@ -8,9 +8,9 @@ import (
 type Field [][]bool
 
 func NewField(width int, height int) Field {
-	field := Field{}
+	var field Field
 	for j := 0; j < height; j++ {
-		row := []bool{}
+		var row []bool
 		for i := 0; i < width; i++ {
 			row = append(row, false)
 		}
@@ -22,8 +22,8 @@ func NewField(width int, height int) Field {
 }
 
 func ParseField(text string) (Field, error) {
-	field := Field{}
-	row := []bool{}
+	var field Field
+	var row []bool
 	var isInsideComment bool
 	for _, character := range text {
 		if isInsideComment {
@@ -34,20 +34,22 @@ func ParseField(text string) (Field, error) {
 			continue
 		}
 
-		if character == '.' {
+		switch character {
+		case '.':
 			row = append(row, false)
-		} else if character == '0' {
+		case '0':
 			row = append(row, true)
-		} else if character == '\n' {
-			if field.Height() != 0 && len(row) != field.Width() {
+		case '\n':
+			hasSomeRows := field.Height() != 0
+			if hasSomeRows && len(row) != field.Width() {
 				return nil, errors.New("inconsistent row length")
 			}
 
 			field = append(field, row)
 			row = []bool{}
-		} else if character == '!' {
+		case '!':
 			isInsideComment = true
-		} else {
+		default:
 			return nil, fmt.Errorf("unknown character %q", character)
 		}
 	}
@@ -75,9 +77,9 @@ func (field Field) SetCell(column int, row int, cell bool) {
 
 func (field Field) NeighborCount(column int, row int) int {
 	var count int
-	for j := row - 1; j <= row+1; j++ {
-		for i := column - 1; i <= column+1; i++ {
-			if field.Cell(i, j) {
+	for neighborRow := row - 1; neighborRow <= row+1; neighborRow++ {
+		for neighborColumn := column - 1; neighborColumn <= column+1; neighborColumn++ {
+			if field.Cell(neighborColumn, neighborRow) {
 				count++
 			}
 		}
@@ -102,10 +104,10 @@ func (field Field) NextCell(column int, row int) bool {
 
 func (field Field) NextField() Field {
 	nextField := NewField(field.Width(), field.Height())
-	for j := 0; j < field.Height(); j++ {
-		for i := 0; i < field.Width(); i++ {
-			nextCell := field.NextCell(i, j)
-			nextField.SetCell(i, j, nextCell)
+	for row := 0; row < field.Height(); row++ {
+		for column := 0; column < field.Width(); column++ {
+			nextCell := field.NextCell(column, row)
+			nextField.SetCell(column, row, nextCell)
 		}
 	}
 
@@ -114,9 +116,9 @@ func (field Field) NextField() Field {
 
 func (field Field) String() string {
 	var result string
-	for j := 0; j < field.Height(); j++ {
-		for i := 0; i < field.Width(); i++ {
-			if field.Cell(i, j) {
+	for row := 0; row < field.Height(); row++ {
+		for column := 0; column < field.Width(); column++ {
+			if field.Cell(column, row) {
 				result += "0"
 			} else {
 				result += "."
