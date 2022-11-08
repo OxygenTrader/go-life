@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"time"
@@ -9,6 +10,10 @@ import (
 )
 
 func main() {
+	outDelay :=
+		flag.Duration("out-delay", 100*time.Millisecond, "delay between frames")
+	flag.Parse()
+
 	text := "" +
 		"!Name: Glider\n" +
 		"!Author: Richard K. Guy\n" +
@@ -29,7 +34,7 @@ func main() {
 
 	for {
 		fmt.Print(field.String())
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(*outDelay)
 
 		field = field.NextField()
 	}
