@@ -66,8 +66,8 @@ func (field Field) Height() int {
 }
 
 func (field Field) Cell(column int, row int) bool {
-	column = (column + field.Width()) % field.Width()
-	row = (row + field.Height()) % field.Height()
+	column = wrapAroundModulus(column, field.Width())
+	row = wrapAroundModulus(row, field.Height())
 	return field[row][column]
 }
 
@@ -129,4 +129,9 @@ func (field Field) String() string {
 	}
 
 	return result
+}
+
+func wrapAroundModulus(value int, modulus int) int {
+	value += modulus // support for a negative value that is less than the modulus
+	return value % modulus
 }
