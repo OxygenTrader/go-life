@@ -3,7 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"log"
+	"os"
 	"time"
 
 	"github.com/OxygenTrader/go-life"
@@ -14,20 +16,12 @@ func main() {
 		flag.Duration("out-delay", 100*time.Millisecond, "delay between frames")
 	flag.Parse()
 
-	text := "" +
-		"!Name: Glider\n" +
-		"!Author: Richard K. Guy\n" +
-		"..........\n" +
-		"..0.......\n" +
-		"...0......\n" +
-		".000......\n" +
-		"..........\n" +
-		"..........\n" +
-		"..........\n" +
-		"..........\n" +
-		"..........\n" +
-		"..........\n"
-	field, err := life.ParseField(text)
+	textBytes, err := io.ReadAll(os.Stdin)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	field, err := life.ParseField(string(textBytes))
 	if err != nil {
 		log.Fatal(err)
 	}
