@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+const (
+	deadCell = '.'
+	liveCell = 'O'
+)
+
 type Field [][]bool
 
 func NewField(width int, height int) Field {
@@ -35,9 +40,9 @@ func ParseField(text string) (Field, error) {
 		}
 
 		switch character {
-		case '.':
+		case deadCell:
 			row = append(row, false)
-		case '0':
+		case liveCell:
 			row = append(row, true)
 		case '\n':
 			hasSomeRows := field.Height() != 0
@@ -119,9 +124,9 @@ func (field Field) String() string {
 	for row := 0; row < field.Height(); row++ {
 		for column := 0; column < field.Width(); column++ {
 			if field.Cell(column, row) {
-				result += "0"
+				result += string(liveCell)
 			} else {
-				result += "."
+				result += string(deadCell)
 			}
 		}
 

@@ -22,9 +22,9 @@ func TestParseField(test *testing.T) {
 		"!Name: Glider\n" +
 		"!Author: Richard K. Guy\n" +
 		".....\n" +
-		"..0..\n" +
-		"...0.\n" +
-		".000.\n" +
+		"..O..\n" +
+		"...O.\n" +
+		".OOO.\n" +
 		".....\n"
 	actualField, actualErr := ParseField(text)
 
@@ -49,9 +49,9 @@ func TestParseField_withInconsistentRowLength(test *testing.T) {
 		"!Name: Glider\n" +
 		"!Author: Richard K. Guy\n" +
 		".....\n" +
-		"..0..\n" +
-		"...0\n" +
-		".000.\n" +
+		"..O..\n" +
+		"...O\n" +
+		".OOO.\n" +
 		".....\n"
 	actualField, actualErr := ParseField(text)
 
@@ -69,9 +69,9 @@ func TestParseField_withUnknownCharacter(test *testing.T) {
 		"!Name: Glider\n" +
 		"!Author: Richard K. Guy\n" +
 		".....\n" +
-		"..0..\n" +
+		"..O..\n" +
 		"...#.\n" +
-		".000.\n" +
+		".OOO.\n" +
 		".....\n"
 	actualField, actualErr := ParseField(text)
 
@@ -275,9 +275,9 @@ func TestField_String(test *testing.T) {
 
 	expectedResult := "" +
 		".....\n" +
-		"..0..\n" +
-		"...0.\n" +
-		".000.\n" +
+		"..O..\n" +
+		"...O.\n" +
+		".OOO.\n" +
 		".....\n"
 	if actualResult != expectedResult {
 		test.Fail()
